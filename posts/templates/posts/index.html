@@ -1,0 +1,37 @@
+{% extends 'posts/base.html' %}
+{% block title %}Список постов{% endblock %}
+{% block content %}
+<h1>Список постов</h1>
+<a href="{% url 'create' %}" class="btn btn-primary mb-3">Добавить пост</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Заголовок</th>
+            <th>Дата публикации</th>
+            <th>Просмотры</th>
+            <th>Опубликован</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for obj in object_list %}
+        <tr>
+            <td>{{ obj.id }}</td>
+            <td>{{ obj.title }}</td>
+            <td>{{ obj.published_at }}</td>
+            <td>{{ obj.views }}</td>
+            <td>{% if obj.is_published %}Да{% else %}Нет{% endif %}</td>
+            <td>
+                <a href="{% url 'update' obj.id %}" class="btn btn-sm btn-warning">Изменить</a>
+                <a href="{% url 'delete' obj.id %}" class="btn btn-sm btn-danger">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Нет записей</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
